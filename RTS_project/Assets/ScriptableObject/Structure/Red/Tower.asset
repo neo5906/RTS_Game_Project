@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb607867f5b3ada459524ec5a0b6bf19, type: 3}
+  m_Name: Tower
+  m_EditorClassIdentifier: 
+  Icon: {fileID: 1376486481, guid: dbc626b28e6ccf74b934221274a12c71, type: 3}
+  ID: ce1d668f-76e9-46a8-9b9f-6c43f1996a7a
+  m_FoundationSprite: {fileID: 21300000, guid: 9dc7a329704caba4aa3390295869e5e5, type: 3}
+  m_CompletionSprite: {fileID: 1376486481, guid: dbc626b28e6ccf74b934221274a12c71, type: 3}
+  m_StructurePrefab: {fileID: 4051699693109522427, guid: 5e4cb4a0014bcbd4293a130b498de67c, type: 3}
+  m_GoldCost: 200
+  m_WoodCost: 100
+  m_BuildingSize: {x: 2, y: 3, z: 0}
+  m_BuildingOffset: {x: -1, y: -1, z: 0}

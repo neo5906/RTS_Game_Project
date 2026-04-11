@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8ee94325f9940d4a9c30fb21ee1488a, type: 3}
+  m_Name: Warrior
+  m_EditorClassIdentifier: 
+  Icon: {fileID: -257473490, guid: f1ca743559025634ba7505f90f0d9471, type: 3}
+  ID: 0efa7876-4e90-4a6e-828f-669c80fe9939
+  m_UnitPrefab: {fileID: 1597394161122672883, guid: 607db03a48812f24681db0557ef578e1, type: 3}
+  m_TrainingCost: 200
+  m_TrainingTime: 10
+  m_UnitType: 0

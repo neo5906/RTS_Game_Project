@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb607867f5b3ada459524ec5a0b6bf19, type: 3}
+  m_Name: ArcherTower
+  m_EditorClassIdentifier: 
+  Icon: {fileID: 21300000, guid: 67e47387c232fc34bb55367ecdc7159d, type: 3}
+  ID: 50b435f0-ce19-4592-8f51-693da4a797b6
+  m_FoundationSprite: {fileID: 21300000, guid: 386ba762db6d7d1419aa72e5a391d42c, type: 3}
+  m_CompletionSprite: {fileID: 21300000, guid: 67e47387c232fc34bb55367ecdc7159d, type: 3}
+  m_StructurePrefab: {fileID: 4767483940015978361, guid: b4828b28a0830fb47ab338cd00cda3de, type: 3}
+  m_GoldCost: 300
+  m_WoodCost: 500
+  m_BuildingSize: {x: 2, y: 3, z: 0}
+  m_BuildingOffset: {x: -1, y: -1, z: 0}
