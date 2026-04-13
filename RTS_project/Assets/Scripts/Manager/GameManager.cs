@@ -18,6 +18,7 @@ public class GameManager : SingletonManager<GameManager>
     [SerializeField] private TrainingUnitUI TrainingUnitUI;
     [SerializeField] private TrainingUI TrainingUI;
     [SerializeField] private Image GameOverUI;
+    [SerializeField] private Canvas mainCanvas;
 
     [Header("Registered Target")]
     public List<Unit> RegisteredUnits = new List<Unit>();
@@ -27,8 +28,10 @@ public class GameManager : SingletonManager<GameManager>
     [SerializeField] private CameraBounds CameraBounds;
 
     [Header("Resources Amount")]
-    public int WoodAmount;
+    public int CultureAmount;
     public int GoldAmount;
+    public int WoodAmount;
+    public int RockAmount;
     public UnityAction onResourcesChanged;
 
     private Vector2 m_MousePosition;
@@ -158,10 +161,21 @@ public class GameManager : SingletonManager<GameManager>
 
     public void StartBuildingProcess(BuildingActionSO _action)
     {
-        if (WoodAmount >= _action.WoodCost && GoldAmount >= _action.GoldCost)
+        
+
+        m_PlacementProcess = new(_action, m_TilemapManager);
+
+        PlaceBuildingUI.ShowRectangle(_action.GoldCost,_action.WoodCost, _action.RockCost);
+        PlaceBuildingUI.RegisterHooks(()=>ConfirmPlacement(_action), CanclePlacement);
+    }
+
+    private void ConfirmPlacement(BuildingActionSO _action)
+    {
+        if (WoodAmount >= _action.WoodCost && GoldAmount >= _action.GoldCost && RockAmount >= _action.RockCost)
         {
             WoodAmount -= _action.WoodCost;
             GoldAmount -= _action.GoldCost;
+            RockAmount -= _action.RockCost;
             onResourcesChanged?.Invoke();
         }
         else
@@ -169,15 +183,6 @@ public class GameManager : SingletonManager<GameManager>
             return;
         }
 
-        m_PlacementProcess = new(_action, m_TilemapManager);
-
-        PlaceBuildingUI.ShowRectangle(_action.GoldCost,_action.WoodCost);
-        PlaceBuildingUI.RegisterHooks(ConfirmPlacement, CanclePlacement);
-    }
-
-    private void ConfirmPlacement()
-    {
-       
         var buildintAction = m_PlacementProcess.BuildingAction;
 
         if (buildintAction == null)
@@ -282,5 +287,85 @@ public class GameManager : SingletonManager<GameManager>
         yield return new WaitForSeconds(2f);
 
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+    }
+
+    // GameManager.cs 中新增内容
+
+    [Header("Tech Tree")]
+    [SerializeField] private TechnologyTreeSO techTree;
+    [SerializeField] public GameObject techTreePanelPrefab;      // 科技树UI预制体
+    [SerializeField] public GameObject techDetailPanelPrefab;    // 详情UI预制体
+
+    private GameObject currentTechTreePanel;
+    private TechTreeUI currentTechTreeUI;
+
+    // 打开科技树界面
+    public void OpenTechTree()
+    {
+        if (currentTechTreePanel == null)
+        {
+            currentTechTreePanel = Instantiate(techTreePanelPrefab, mainCanvas.transform);
+            currentTechTreeUI = currentTechTreePanel.GetComponent<TechTreeUI>();
+            
+        }
+        currentTechTreePanel.SetActive(true);
+        currentTechTreeUI.Initialize(techTree, this);
+        Debug.Log($"TechTreePanel active: {currentTechTreePanel.activeSelf}");
+        Debug.Log($"TechTreePanel activeInHierarchy: {currentTechTreePanel.activeInHierarchy}");
+        Debug.Log($"TechTreePanel parent: {currentTechTreePanel.transform.parent.name}");
+    }
+
+    // 关闭科技树界面
+    public void CloseTechTree()
+    {
+        if (currentTechTreePanel != null)
+            currentTechTreePanel.SetActive(false);
+    }
+
+    // 尝试解锁科技节点
+    public bool TryUnlockTechNode(TechnologyNodeSO node)
+    {
+        // 检查前置条件和资源
+        if (!node.ArePrerequisitesMet())
+        {
+            Debug.Log("前置科技未解锁");
+            return false;
+        }
+
+        if (CultureAmount < node.CultureCost)
+        {
+            Debug.Log("文化值不足");
+            return false;
+        }
+
+        // 消耗文化值
+        CultureAmount -= node.CultureCost;
+        node.Unlock();
+        onResourcesChanged?.Invoke();
+
+        // 更新UI（可以发送事件通知科技树UI刷新）
+        currentTechTreeUI?.RefreshAllNodes();
+        return true;
+    }
+
+    public void OpenTechDetail(TechnologyNodeSO node)
+    {
+        if (techDetailPanelPrefab == null)
+        {
+            Debug.LogError("未指定 techDetailPanelPrefab，无法打开详情界面。");
+            return;
+        }
+
+        // 实例化详情面板
+        GameObject detailObj = Instantiate(techDetailPanelPrefab, mainCanvas.transform);
+        TechDetailUI detailUI = detailObj.GetComponent<TechDetailUI>();
+        if (detailUI != null)
+        {
+            detailUI.Setup(node, this);
+        }
+        else
+        {
+            Debug.LogError("TechDetailPanel 预制体缺少 TechDetailUI 组件！");
+        }
     }
 }

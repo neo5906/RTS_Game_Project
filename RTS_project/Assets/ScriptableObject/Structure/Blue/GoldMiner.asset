@@ -19,5 +19,6 @@ MonoBehaviour:
   m_StructurePrefab: {fileID: 166341497796666365, guid: 6cc81ebab622d4c46af7639c5660d92a, type: 3}
   m_GoldCost: 500
   m_WoodCost: 0
+  m_RockCost: 100
   m_BuildingSize: {x: 3, y: 2, z: 0}
   m_BuildingOffset: {x: -1, y: -1, z: 0}

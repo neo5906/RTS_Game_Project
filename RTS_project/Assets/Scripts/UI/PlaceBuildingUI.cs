@@ -11,6 +11,7 @@ public class PlaceBuildingUI : MonoBehaviour
     [SerializeField] private Button cancleButton;
     [SerializeField] private TextMeshProUGUI goldCost;
     [SerializeField] private TextMeshProUGUI woodCost;
+    [SerializeField] private TextMeshProUGUI rockCost;
 
     private void Start()
     {
@@ -22,11 +23,12 @@ public class PlaceBuildingUI : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    public void ShowRectangle(int _goldCost, int _woodCost)
+    public void ShowRectangle(int _goldCost, int _woodCost, int _rockCost)
     {
         gameObject.SetActive(true);
         goldCost.text = _goldCost.ToString();
         woodCost.text = _woodCost.ToString();
+        rockCost.text = _rockCost.ToString();
     }
 
     public void RegisterHooks(UnityAction _confirmMethod, UnityAction _cancleAction)

@@ -7,8 +7,10 @@ using UnityEditor;
 
 public class ResourcesUI : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI WoodAmount;
+    [SerializeField] private TextMeshProUGUI CultureAmount;
     [SerializeField] private TextMeshProUGUI GoldAmount;
+    [SerializeField] private TextMeshProUGUI WoodAmount;
+    [SerializeField] private TextMeshProUGUI RockAmount;
 
     private GameManager m_GameManager;
 
@@ -22,17 +24,25 @@ public class ResourcesUI : MonoBehaviour
 
     private void ResourcesChange()
     {
-        DOTween.To(() => int.Parse(WoodAmount.text.Replace(",","")), x => { WoodAmount.text = x.ToString("N0"); },
-                                m_GameManager.WoodAmount, .5f).SetEase(Ease.InQuad);
+        DOTween.To(() => int.Parse(WoodAmount.text.Replace(",","")), x => { CultureAmount.text = x.ToString("N0"); },
+                                m_GameManager.CultureAmount, .5f).SetEase(Ease.InQuad);
 
         DOTween.To(() => int.Parse(GoldAmount.text.Replace(",","")), x => { GoldAmount.text = x.ToString("N0"); },
                                     m_GameManager.GoldAmount, .5f).SetEase(Ease.InQuad);
+
+        DOTween.To(() => int.Parse(WoodAmount.text.Replace(",", "")), x => { WoodAmount.text = x.ToString("N0"); },
+                                m_GameManager.WoodAmount, .5f).SetEase(Ease.InQuad);
+
+        DOTween.To(() => int.Parse(GoldAmount.text.Replace(",", "")), x => { RockAmount.text = x.ToString("N0"); },
+                                    m_GameManager.RockAmount, .5f).SetEase(Ease.InQuad);
     }
 
     private void InitializeResourcesValue()
     {
-        WoodAmount.text = m_GameManager.WoodAmount.ToString("N0");
+        CultureAmount.text = m_GameManager.CultureAmount.ToString("N0");
         GoldAmount.text = m_GameManager.GoldAmount.ToString("N0");
+        WoodAmount.text = m_GameManager.WoodAmount.ToString("N0");
+        RockAmount.text = m_GameManager.RockAmount.ToString("N0");
     }
 
 }
