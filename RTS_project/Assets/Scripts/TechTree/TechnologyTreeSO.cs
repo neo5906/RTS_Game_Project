@@ -5,4 +5,12 @@ using UnityEngine;
 public class TechnologyTreeSO : ScriptableObject
 {
     public List<TechnologyNodeSO> AllNodes;
+
+    public void ResetAllNodes()
+    {
+        foreach (var node in AllNodes)
+        {
+            node.ResetUnlockState();
+        }
+    }
 }

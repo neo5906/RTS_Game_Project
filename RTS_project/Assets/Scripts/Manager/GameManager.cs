@@ -18,6 +18,7 @@ public class GameManager : SingletonManager<GameManager>
     [SerializeField] private TrainingUnitUI TrainingUnitUI;
     [SerializeField] private TrainingUI TrainingUI;
     [SerializeField] private Image GameOverUI;
+    [SerializeField] private Image VictoryUI;
     [SerializeField] private Canvas mainCanvas;
 
     [Header("Registered Target")]
@@ -34,6 +35,13 @@ public class GameManager : SingletonManager<GameManager>
     public int RockAmount;
     public UnityAction onResourcesChanged;
 
+    [Header("Resources Auto Increase")]
+    [SerializeField] private float cultureIncreaseInterval = 1f;
+    [SerializeField] private int cultureIncreaseAmount = 1;
+
+    private float cultureTimer = 0f;
+    private bool IsGameOver = false;
+
     private Vector2 m_MousePosition;
     private LineRenderer ActiveRay;
     private PlacementProcess m_PlacementProcess;
@@ -46,7 +54,14 @@ public class GameManager : SingletonManager<GameManager>
     {
         m_TilemapManager = TilemapManager.Get();
         m_CameraController = new(PanSpeed, CameraBounds);
-        //m_CameraController = new(PanSpeed);
+
+        if (techTree != null)
+        {
+            foreach (var node in techTree.AllNodes)
+            {
+                node.ResetUnlockState();
+            }
+        }
     }
 
     private void Update()
@@ -58,6 +73,17 @@ public class GameManager : SingletonManager<GameManager>
             return;
         }
 
+        if (!IsGameOver)
+        {
+            cultureTimer += Time.deltaTime;
+            if (cultureTimer >= cultureIncreaseInterval)
+            {
+                cultureTimer -= cultureIncreaseInterval;
+                CultureAmount += cultureIncreaseAmount;
+                onResourcesChanged?.Invoke();
+            }
+        }
+
         if (Input.GetMouseButtonDown(0))
         {
             Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -65,6 +91,12 @@ public class GameManager : SingletonManager<GameManager>
             HandleClick(mousePosition);
         }
         UpdateMovementRay();
+
+        //快捷键H切换血条
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            ToggleHealthBars();
+        }
 
     }
 
@@ -264,37 +296,37 @@ public class GameManager : SingletonManager<GameManager>
     {
         RegisteredUnits.Remove(_unit);
 
-        bool HasActiveBlueBuilding = RegisteredUnits.Where(unit => unit != null && !unit.IsDead && unit.TryGetComponent(out StructureUnit _) && unit.CompareTag("BlueUnit")).Any();
-        bool HasActiveRedBuilding = RegisteredUnits.Where(unit => unit != null && !unit.IsDead && unit.TryGetComponent(out StructureUnit _) && unit.CompareTag("RedUnit")).Any();
+        if (IsGameOver) return;
 
-        if (!HasActiveBlueBuilding)
-        {
-            GameOverUI.gameObject.SetActive(true);
-            RegisteredUnits.Where(unit => !unit.IsDead && unit.CompareTag("BlueUnit")).ToList().ForEach(unit => unit.Death());
-            StartCoroutine(GameOver());
-        }
+        bool hasActiveBlueBuilding = RegisteredUnits.Any(
+            u => u != null && !u.IsDead && u is StructureUnit && u.CompareTag("BlueUnit")
+        );
+        bool hasActiveRedBuilding = RegisteredUnits.Any(
+            u => u != null && !u.IsDead && u is StructureUnit && u.CompareTag("RedUnit")
+        );
 
-        if (!HasActiveRedBuilding)
+        if (!hasActiveBlueBuilding)
         {
-            GameOverUI.gameObject.SetActive(true);
-            RegisteredUnits.Where(unit => unit.CompareTag("RedUnit")).ToList().ForEach(unit => unit.Death());
-            StartCoroutine(GameOver());
+            StartCoroutine(FailureSequence());
         }
     }
 
-    private IEnumerator GameOver()
+    private IEnumerator FailureSequence()
     {
-        yield return new WaitForSeconds(2f);
+        IsGameOver = true;
+        if (GameOverUI != null)
+        {
+            GameOverUI.gameObject.SetActive(true);
+        }
 
+        yield return new WaitForSeconds(2f);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
     }
 
-    // GameManager.cs 中新增内容
-
     [Header("Tech Tree")]
     [SerializeField] private TechnologyTreeSO techTree;
-    [SerializeField] public GameObject techTreePanelPrefab;      // 科技树UI预制体
-    [SerializeField] public GameObject techDetailPanelPrefab;    // 详情UI预制体
+    [SerializeField] public GameObject techTreePanelPrefab;
+    [SerializeField] public GameObject techDetailPanelPrefab;
 
     private GameObject currentTechTreePanel;
     private TechTreeUI currentTechTreeUI;
@@ -338,10 +370,46 @@ public class GameManager : SingletonManager<GameManager>
             return false;
         }
 
-        // 消耗文化值
+        //消耗文化值
         CultureAmount -= node.CultureCost;
         node.Unlock();
         onResourcesChanged?.Invoke();
+
+        if (node.IsVictoryNode && !IsGameOver)
+        {
+            StartCoroutine(VictorySequence());
+            return true;
+        }
+
+        //解锁建筑
+        if (node.UnlockedBuildings != null && node.UnlockedBuildings.Count > 0)
+        {
+            //从已注册单位中筛选出玩家阵营的结构单位
+            var playerStructures = RegisteredUnits
+                .Where(u => u != null && !u.IsDead && u.CompareTag("BlueUnit") && u is MainUnit)
+                .Cast<StructureUnit>();
+
+            foreach (var structure in playerStructures)
+            {
+                foreach (var buildingAction in node.UnlockedBuildings)
+                {
+                    structure.AddAction(buildingAction);
+                }
+            }
+
+            if (ActiveUnit != null && ActiveUnit is MainUnit activeStructure && activeStructure.CompareTag("BlueUnit"))
+            {
+                ActionBar.ClearAllActionButtons();
+                if (activeStructure.Actions.Count > 0)
+                {
+                    ActionBar.ShowActionBar();
+                    foreach (var action in activeStructure.Actions)
+                    {
+                        ActionBar.RegisterActionButton(action.Icon, () => action.ExecuteAction());
+                    }
+                }
+            }
+        }
 
         // 更新UI（可以发送事件通知科技树UI刷新）
         currentTechTreeUI?.RefreshAllNodes();
@@ -366,6 +434,44 @@ public class GameManager : SingletonManager<GameManager>
         else
         {
             Debug.LogError("TechDetailPanel 预制体缺少 TechDetailUI 组件！");
+        }
+    }
+
+    private IEnumerator VictorySequence()
+    {
+        IsGameOver = true;
+        if (VictoryUI != null)
+            VictoryUI.gameObject.SetActive(true);
+        else if (GameOverUI != null)
+        {
+            GameOverUI.gameObject.SetActive(true);
+        }
+
+        //停止所有单位行动
+        Time.timeScale = 0f; //暂停游戏
+
+        yield return new WaitForSecondsRealtime(3f);
+
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+    }
+
+    [Header("UI Toggle")]
+    [SerializeField] private bool showHealthBars = true;   // 默认显示血条
+    public bool ShowHealthBars => showHealthBars;
+
+    // 切换血条显示状态
+    public void ToggleHealthBars()
+    {
+        showHealthBars = !showHealthBars;
+
+        // 更新所有现有单位的血条显隐
+        foreach (var unit in RegisteredUnits)
+        {
+            if (unit != null && !unit.IsDead)
+            {
+                unit.SetHealthBarActive(showHealthBars);
+            }
         }
     }
 }

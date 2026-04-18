@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8ee94325f9940d4a9c30fb21ee1488a, type: 3}
+  m_Name: ZZSB
+  m_EditorClassIdentifier: 
+  Icon: {fileID: -1201093185, guid: 8f9107deacfe2df4081ff5f063003800, type: 3}
+  ID: fe5b36ee-1373-4596-8e82-b672c1a9c7b2
+  m_UnitPrefab: {fileID: 299457829955140979, guid: a5264e89483217940a0bbdc9bc8ef04b, type: 3}
+  m_TrainingCost: 50
+  m_TrainingTime: 15
+  m_UnitType: 5

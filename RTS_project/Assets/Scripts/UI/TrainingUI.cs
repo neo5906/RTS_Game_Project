@@ -5,9 +5,15 @@ using UnityEngine;
 
 public enum TrainingUnitType
 {
-    Warrior,
-    Archer,
-    Worker
+    Warrior,Archer,Worker,
+    YSZS,
+    GR,
+    ZZSB,
+    GJS,
+    PJGJS,
+    PJSB,
+    DJJ,
+    SGS
 }
 
 public class TrainingUI : MonoBehaviour
@@ -17,6 +23,14 @@ public class TrainingUI : MonoBehaviour
     [SerializeField] private GameObject WarriorSlot;
     [SerializeField] private GameObject ArcherSlot;
     [SerializeField] private GameObject WorkerSlot;
+    [SerializeField] private GameObject YSZSSlot;
+    [SerializeField] private GameObject GRSlot;
+    [SerializeField] private GameObject ZZSBSlot;
+    [SerializeField] private GameObject GJSSlot;
+    [SerializeField] private GameObject PJGJSSlot;
+    [SerializeField] private GameObject PJSBSlot;
+    [SerializeField] private GameObject DJJSlot;
+    [SerializeField] private GameObject SGSSlot;
 
     private Queue<GameObject> TrainingUnits;
     private Queue<GameObject> TrainingSlots;
@@ -85,6 +99,30 @@ public class TrainingUI : MonoBehaviour
                 break;
             case TrainingUnitType.Worker:
                 newSlot = Instantiate(WorkerSlot, PartForm);
+                break;
+            case TrainingUnitType.YSZS:
+                newSlot = Instantiate(YSZSSlot, PartForm);
+                break;
+            case TrainingUnitType.GR:
+                newSlot = Instantiate(GRSlot, PartForm);
+                break;
+            case TrainingUnitType.ZZSB:
+                newSlot = Instantiate(ZZSBSlot, PartForm);
+                break;
+            case TrainingUnitType.GJS:
+                newSlot = Instantiate(GJSSlot, PartForm);
+                break;
+            case TrainingUnitType.PJGJS:
+                newSlot = Instantiate(PJGJSSlot, PartForm);
+                break;
+            case TrainingUnitType.PJSB:
+                newSlot = Instantiate(PJSBSlot, PartForm);
+                break;
+            case TrainingUnitType.DJJ:
+                newSlot = Instantiate(DJJSlot, PartForm);
+                break;
+            case TrainingUnitType.SGS:
+                newSlot = Instantiate(SGSSlot, PartForm);
                 break;
             default:
                 return;

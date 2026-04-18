@@ -1,9 +1,7 @@
-using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Analytics;
 
 public class EnemyAI : MonoBehaviour
 {
@@ -11,142 +9,247 @@ public class EnemyAI : MonoBehaviour
     public WorkerUnit Worker;
     public List<HumanoidUnit> ActiveUnits;
 
-    private GameManager m_GameManger;
+    private GameManager m_GameManager;
     private List<Vector3> m_PlacementGrid;
 
-    private Queue<TrainingActionSO> m_TrainingActions;
-    private Queue<StructureUnit> m_TrainingBarracks;
+    private Queue<(TrainingActionSO action, BarrackUnit barrack)> trainingQueue = new();
 
-    private bool IsTraining = false;
+    [Header("Training Settings")]
+    [SerializeField] private float trainingCheckInterval = 2f;
+    [SerializeField] private int maxTrainingQueueSize = 3;
+
+    private float trainingCheckTimer;
+
+    [Header("Attack Wave Settings")]
+    [SerializeField] private float attackWaveInterval = 180f;
+    [SerializeField] private bool enableWaveAttack = true;
+    [SerializeField] private int minUnitsForWave = 1;
+
+    private float attackWaveTimer;
 
     [Header("EnemyAIStage")]
     public List<EnemyAIStageSO> EnemyAIStages;
-    [SerializeField] private float EnemyCheckFrequency;
-    [SerializeField] private float EnemyRefillFrequency;
-    private float StageUpdateFruency;
+    [SerializeField] private float enemyCheckFrequency = 1f;
+    [SerializeField] private float enemyRefillFrequency = 5f;
 
-    private float EnemyCheckTimer;
-    private float EnemyRefillTimer;
-    private float StageUpdateTimer;
+    private float enemyCheckTimer;
+    private float enemyRefillTimer;
+    private float stageUpdateTimer;
+    private int currentStageIndex = 0;
+    private float stageUpdateFrequency;
+    public int currentWaveCount;
 
-    private int CurrentStageIndex = 0;
-    
+    private bool isTraining = false;
 
     private void Start()
     {
-        m_GameManger = GameManager.Get();
+        m_GameManager = GameManager.Get();
+        if (EnemyAIStages.Count > 0)
+            stageUpdateFrequency = EnemyAIStages[0].StageExistWindow;
 
-        m_TrainingBarracks = new();
-        m_TrainingActions = new();
+        attackWaveTimer = attackWaveInterval;
+        currentWaveCount = 0;
     }
 
     private void Update()
     {
-        if(Time.time - EnemyCheckTimer >= EnemyCheckFrequency)
+        // 进攻波次计时器
+        if (enableWaveAttack)
         {
-            EnemyCheckTimer = Time.time;
-
-            if(Time.time - StageUpdateTimer >= StageUpdateFruency)
+            attackWaveTimer -= Time.deltaTime;
+            if (attackWaveTimer <= 0f)
             {
-                StageUpdateTimer = Time.time;
-                if(CurrentStageIndex + 1 >= EnemyAIStages.Count)
-                {
-                    return;
-                }
-
-                var stage = EnemyAIStages[CurrentStageIndex];
-                StageUpdateFruency = stage.StageExistWindow;
-
-                EnemyPlaceBuilding(stage.BuildingAction); // 自动放置建筑
-                foreach(var action in stage.TrainingActions)
-                {
-                    EnemyTrainingUnit(action);
-                }
-                CurrentStageIndex++;
+                attackWaveTimer = attackWaveInterval;
+                currentWaveCount++;
+                LaunchAttackWave();
             }
-           
-            if(Time.time - EnemyRefillTimer >= EnemyRefillFrequency)
+        }
+
+        // 全局检查计时
+        if (Time.time - enemyCheckTimer >= enemyCheckFrequency)
+        {
+            enemyCheckTimer = Time.time;
+
+            if (currentStageIndex < EnemyAIStages.Count)
             {
-                EnemyRefillTimer = Time.time;
+                if (Time.time - stageUpdateTimer >= stageUpdateFrequency)
+                {
+                    var currentStage = EnemyAIStages[currentStageIndex];
+                    // 检查波次要求是否满足
+                    if (currentWaveCount >= currentStage.minWaveRequired)
+                    {
+                        ExecuteCurrentStage();
+                        currentStageIndex++;
+
+                        if (currentStageIndex < EnemyAIStages.Count)
+                        {
+                            stageUpdateFrequency = EnemyAIStages[currentStageIndex].StageExistWindow;
+                            stageUpdateTimer = Time.time;
+                        }
+                    }
+                    else
+                    {
+                        Debug.Log($"EnemyAI: 阶段 {currentStageIndex} 需要波次 {currentStage.minWaveRequired}，当前波次 {currentWaveCount}，等待中...");
+                    }
+                }
+            }
+
+            // 刷新活跃单位列表
+            if (Time.time - enemyRefillTimer >= enemyRefillFrequency)
+            {
+                enemyRefillTimer = Time.time;
                 RefillActiveUnits();
             }
-            if(ActiveUnits.Count > 0)
-            {
-                ActiveUnits = ActiveUnits.Where(unit => unit != null && !unit.IsDead).ToList();
-                foreach(var unit in ActiveUnits)
-                {
-                    unit.FindClosestEnemyWithoutRange();
-                }
-            }
         }
 
-        if(!IsQueueVaild() || IsTraining)
+        // 持续训练逻辑
+        if (Time.time - trainingCheckTimer >= trainingCheckInterval)
         {
-            return;
+            trainingCheckTimer = Time.time;
+            TryAddTrainingToQueue();
         }
-        StartCoroutine(StartTrainingProcess());
+
+        // 启动训协程
+        if (trainingQueue.Count > 0 && !isTraining)
+        {
+            StartCoroutine(ProcessTrainingQueue());
+        }
+    }
+
+    private void ExecuteCurrentStage()
+    {
+        var stage = EnemyAIStages[currentStageIndex];
+        if (stage.BuildingAction != null)
+            EnemyPlaceBuilding(stage.BuildingAction);
+    }
+
+    private void TryAddTrainingToQueue()
+    {
+        if (trainingQueue.Count >= maxTrainingQueueSize) return;
+
+        var barracks = FindObjectsOfType<BarrackUnit>()
+            .Where(b => b != null && !b.IsDead && b.CompareTag("RedUnit") && !b.IsUnderConstruction)
+            .ToList();
+
+        if (barracks.Count == 0) return;
+
+        // 只收集已满足波次要求的阶段的训练单位
+        List<TrainingActionSO> availableTrainings = new();
+        foreach (var stage in EnemyAIStages)
+        {
+            if (currentWaveCount >= stage.minWaveRequired)
+            {
+                if (stage.TrainingActions != null)
+                    availableTrainings.AddRange(stage.TrainingActions);
+            }
+        }
+        if (availableTrainings.Count == 0) return;
+
+        var barrack = barracks[Random.Range(0, barracks.Count)];
+        var action = availableTrainings[Random.Range(0, availableTrainings.Count)];
+
+        trainingQueue.Enqueue((action, barrack));
+        Debug.Log($"EnemyAI: 添加训练任务 - {action.name} @ {barrack.name}");
+    }
+
+    private IEnumerator ProcessTrainingQueue()
+    {
+        isTraining = true;
+        while (trainingQueue.Count > 0)
+        {
+            var (action, barrack) = trainingQueue.Dequeue();
+            if (barrack == null || barrack.IsDead)
+            {
+                continue;
+            }
+
+            yield return new WaitForSeconds(action.TrainingTime);
+
+            if (barrack != null && !barrack.IsDead)
+            {
+                GameObject newUnit = Instantiate(action.UnitPrefab, barrack.transform.position, Quaternion.identity);
+                var humanoid = newUnit.GetComponent<HumanoidUnit>();
+                humanoid.MoveToDestination(barrack.transform.position + Vector3.down * 3);
+                ActiveUnits.Add(humanoid);
+            }
+        }
+        isTraining = false;
     }
 
     private void RefillActiveUnits()
     {
-        ActiveUnits = FindObjectsOfType<HumanoidUnit>().Where(unit => unit != null && !unit.IsDead && unit.CompareTag("RedUnit") && !unit.TryGetComponent(out WorkerUnit _)).ToList();  
+        ActiveUnits = FindObjectsOfType<HumanoidUnit>()
+            .Where(u => u != null && !u.IsDead && u.CompareTag("RedUnit") && u is not WorkerUnit)
+            .ToList();
     }
 
-    private IEnumerator StartTrainingProcess()
+    private void LaunchAttackWave()
     {
-        IsTraining = true;
-        var trainingAction = m_TrainingActions.Dequeue();
-        float time = trainingAction.TrainingTime;
+        // 刷新单位列表确保最新
+        RefillActiveUnits();
 
-        yield return new WaitForSeconds(time);
-        var unit = trainingAction.UnitPrefab;
-        var barrack = m_TrainingBarracks.Dequeue();
-        GameObject newUnit = Instantiate(unit,barrack.transform.position,Quaternion.identity);
-        newUnit.GetComponent<HumanoidUnit>().MoveToDestination(barrack.transform.position + Vector3.down * 3);
+        var combatUnits = ActiveUnits.Where(u => u != null && !u.IsDead).ToList();
+        if (combatUnits.Count < minUnitsForWave)
+        {
+            Debug.Log($"EnemyAI: 兵力不足 ({combatUnits.Count}/{minUnitsForWave})，推迟进攻");
+            return;
+        }
 
-        IsTraining = false;
+        // 优先寻找玩家市中心
+        MainUnit playerMain = FindPlayerMainBuilding();
+
+        foreach (var unit in combatUnits)
+        {
+            if (playerMain != null && !playerMain.IsDead)
+            {
+                unit.AssignTarget(playerMain);
+            }
+            else
+            {
+                unit.FindClosestEnemyWithoutRange();
+            }
+        }
+
+        Debug.Log($"EnemyAI: 发动波次进攻！参战单位数={combatUnits.Count}");
     }
 
-    private bool IsQueueVaild() => m_TrainingBarracks.Count > 0 && m_TrainingActions.Count > 0;
+    private MainUnit FindPlayerMainBuilding()
+    {
+        return m_GameManager.RegisteredUnits
+            .FirstOrDefault(u => u != null && !u.IsDead && u.CompareTag("BlueUnit") && u is MainUnit) as MainUnit;
+    }
+
+
+    public float GetRemainingTimeToNextWave()
+    {
+        return Mathf.Max(0, attackWaveTimer);
+    }
 
     private void EnemyPlaceBuilding(BuildingActionSO _buildingAction)
     {
         m_PlacementGrid = new();
 
-        for(int i=-7;i<=7;i++)
+        for (int i = -7; i <= 7; i++)
         {
-            for(int j=-7;j<=7;j++)
+            for (int j = -7; j <= 7; j++)
             {
-                var placePosition = MainCastle.transform.position + new Vector3(i,j,0);
+                var placePosition = MainCastle.transform.position + new Vector3(i, j, 0);
 
-                if (m_GameManger.CanEnemyPlaceBuilding(_buildingAction, placePosition))
+                if (m_GameManager.CanEnemyPlaceBuilding(_buildingAction, placePosition))
                 {
                     m_PlacementGrid.Add(placePosition);
                 }
             }
         }
-        if(m_PlacementGrid.Count == 0)
+        if (m_PlacementGrid.Count == 0)
         {
             return;
         }
 
-        var finalPosition = m_PlacementGrid[Random.Range(0,m_PlacementGrid.Count -1)];
+        var finalPosition = m_PlacementGrid[Random.Range(0, m_PlacementGrid.Count - 1)];
 
-        new BuildingProcess(_buildingAction,finalPosition,out var structure);
+        new BuildingProcess(_buildingAction, finalPosition, out var structure);
         Worker.AssignTarget(structure);
         Worker.currentTask = WorkerTask.Building;
-    }
-
-    private void EnemyTrainingUnit(TrainingActionSO _trainingAction)
-    {
-        var barracks = FindObjectsOfType<BarrackUnit>().Where(unit => !unit.IsDead && unit.CompareTag("RedUnit") && !unit.IsUnderConstruction).ToList();
-        if(barracks.Count == 0)
-        {
-            return;
-        }
-        var barrack = barracks[Random.Range(0,barracks.Count -1)];
-
-        m_TrainingActions.Enqueue(_trainingAction);
-        m_TrainingBarracks.Enqueue(barrack);
     }
 }

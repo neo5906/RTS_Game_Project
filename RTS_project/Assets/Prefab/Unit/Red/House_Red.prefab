@@ -5226,7 +5226,7 @@ MonoBehaviour:
   Actions:
   - {fileID: 11400000, guid: 57615cebc04e45846be1211e660a28fc, type: 2}
   - {fileID: 11400000, guid: 742e7e663a8033647a810323f016ae00, type: 2}
-  - {fileID: 11400000, guid: 57615cebc04e45846be1211e660a28fc, type: 2}
+  - {fileID: 11400000, guid: 9a06b35b23235894a8ee442a1ecc4d26, type: 2}
   CheckFrequency: 0.5
   IsDead: 0
   HealthBar: {fileID: 4183179197164676959}

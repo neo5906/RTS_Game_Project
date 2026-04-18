@@ -27,12 +27,14 @@ public class UnitStats : MonoBehaviour
     {
 
         int damage = Damage;
+        int armor =_stats.Armor;
+        if (armor > 100) armor = 100;
 
         if (Random.Range(0, 100) <= CritChance)
         {
             damage *= 2;
         }
-        damage -= _stats.Armor;
+        damage = damage*(100 - armor)/100;
         if(damage < 0) { damage = 0; }
 
         GameObject newFont = Instantiate(DamageFont, _stats.transform.position + Vector3.up, Quaternion.identity);

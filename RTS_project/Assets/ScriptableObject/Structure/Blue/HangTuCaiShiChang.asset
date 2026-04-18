@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb607867f5b3ada459524ec5a0b6bf19, type: 3}
+  m_Name: HangTuCaiShiChang
+  m_EditorClassIdentifier: 
+  Icon: {fileID: 1105905693, guid: 823569f21310caf4599952d7d2836b1f, type: 3}
+  ID: 55b8eff8-e2dd-4a53-99bb-5aaa1785aa2a
+  m_FoundationSprite: {fileID: 1715559396, guid: 38592d703ef2f9d4ca2a2f8e9639d85c, type: 3}
+  m_CompletionSprite: {fileID: 1105905693, guid: 823569f21310caf4599952d7d2836b1f, type: 3}
+  m_StructurePrefab: {fileID: 2908008927388712848, guid: b5bcbaae99991b042ad63b636ff36e49, type: 3}
+  m_GoldCost: 0
+  m_WoodCost: 50
+  m_RockCost: 0
+  m_BuildingSize: {x: 4, y: 2, z: 0}
+  m_BuildingOffset: {x: -2, y: -1, z: 0}

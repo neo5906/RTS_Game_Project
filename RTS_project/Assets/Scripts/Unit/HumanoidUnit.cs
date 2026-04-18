@@ -34,7 +34,7 @@ public class HumanoidUnit : Unit
         }
     }
 
-    protected int ComboCounter = 0;
+    //protected int ComboCounter = 0;
 
     protected override void Start()
     {
@@ -128,16 +128,16 @@ public class HumanoidUnit : Unit
 
     public void AnimationFinishTrigger()
     {
-        anim.SetBool("Attack_Horizontal", false);
-        anim.SetBool("Attack_Up", false);
-        anim.SetBool("Attack_Down", false);
-        ComboCounter++;
+        anim.SetBool("Attack", false);
+        //anim.SetBool("Attack_Up", false);
+        //anim.SetBool("Attack_Down", false);
+        //ComboCounter++;
     }
 
-    public void AnimationFinishTrigger_2()
-    {
-        anim.SetBool("Attack", false);
-    }
+    //public void AnimationFinishTrigger_2()
+    //{
+    //    anim.SetBool("Attack", false);
+    //}
 
     public void FindClosestEnemyInRange()
     {

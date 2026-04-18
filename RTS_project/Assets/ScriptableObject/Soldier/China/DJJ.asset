@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8ee94325f9940d4a9c30fb21ee1488a, type: 3}
+  m_Name: DJJ
+  m_EditorClassIdentifier: 
+  Icon: {fileID: 1471079869, guid: 4be9fe78eacc49c4e975c4442edf3b1b, type: 3}
+  ID: 2d4d2e8a-0748-4ae8-a33a-7602a4b68988
+  m_UnitPrefab: {fileID: 6437640016244591924, guid: fd300a31b6e502b4badd4e8cd1e1f6e8, type: 3}
+  m_TrainingCost: 250
+  m_TrainingTime: 30
+  m_UnitType: 9

@@ -28,6 +28,9 @@ public class Unit : MonoBehaviour
         m_GameManager = GameManager.Get();
         m_GameManager.RegisteredUnits.Add(this);
         //m_GameManager.RegisterUnit(this);
+
+        if (HealthBar != null)
+            HealthBar.SetActive(m_GameManager.ShowHealthBars);
     }
 
     protected virtual void Update()
@@ -42,12 +45,30 @@ public class Unit : MonoBehaviour
 
     public virtual void Death()
     {
+        if (IsDead) return;
         IsDead = true;
-        m_GameManager.RegisteredUnits.Remove(this);
-        //m_GameManager.RemoveUnit(this);
+        //m_GameManager.RegisteredUnits.Remove(this);
+        m_GameManager.RemoveUnit(this);
         if (HealthBar != null)
             HealthBar.SetActive(false);
     }
 
     public void DestroyUnit() => Destroy(gameObject);
+
+    public void AddAction(ActionSO action)
+    {
+        if (action == null) return;
+        if (!Actions.Contains(action))
+        {
+            Actions.Add(action);
+            Debug.Log($"{gameObject.name} 获得了：{action.name}");
+        }
+    }
+
+    //血条显隐方法
+    public void SetHealthBarActive(bool active)
+    {
+        if (HealthBar != null)
+            HealthBar.SetActive(active);
+    }
 }

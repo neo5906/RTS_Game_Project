@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce287e2f1eefe334896aa565c6ebd0fb, type: 3}
+  m_Name: 60-A
+  m_EditorClassIdentifier: 
+  StageExistWindow: 60
+  minWaveRequired: 1
+  BuildingAction: {fileID: 0}
+  TrainingActions:
+  - {fileID: 11400000, guid: 57615cebc04e45846be1211e660a28fc, type: 2}

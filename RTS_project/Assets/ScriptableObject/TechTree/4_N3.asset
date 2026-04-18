@@ -19,3 +19,5 @@ MonoBehaviour:
   PositionInTree: {x: 60, y: -250}
   Prerequisites:
   - {fileID: 11400000, guid: 377eb281411e69e40b743fabb3f56c6f, type: 2}
+  unlockedBuildings:
+  - {fileID: 11400000, guid: 2247e50141d33f94f8318481e209dd1a, type: 2}

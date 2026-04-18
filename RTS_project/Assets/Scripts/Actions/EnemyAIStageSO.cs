@@ -7,6 +7,8 @@ public class EnemyAIStageSO : ScriptableObject
 {
     public float StageExistWindow;
 
+    public int minWaveRequired = 0;
+
     public BuildingActionSO BuildingAction;
 
     public List<TrainingActionSO> TrainingActions;

@@ -116,8 +116,8 @@ Transform:
   m_GameObject: {fileID: 1571075585822776683}
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0.04, y: -0.3, z: -0.03}
-  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -0.03}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 410229896371330907}
@@ -761,7 +761,7 @@ ParticleSystem:
     donutRadius: 0.2
     m_Position: {x: 0, y: 0, z: 0}
     m_Rotation: {x: 0, y: 0, z: 0}
-    m_Scale: {x: 1.5, y: 1, z: 1.25}
+    m_Scale: {x: 4, y: 1, z: 4}
     placementMode: 0
     m_MeshMaterialIndex: 0
     m_MeshNormalOffset: 0
@@ -959,7 +959,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 10
+      scalar: 32
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -5004,7 +5004,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 0, y: 1.63}
   m_SizeDelta: {x: 905.3334, y: 506.6667}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &1072204746615876927
@@ -5110,7 +5110,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.12, y: 0.12, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 410229896371330907}
@@ -5156,7 +5156,7 @@ SpriteRenderer:
   m_SortingLayerID: 1526793929
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 81996dee5fc90894bb83ff02bb2cd341, type: 3}
+  m_Sprite: {fileID: 966213273, guid: 66024fbb735b6c5458b438498ea9f414, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -5178,7 +5178,7 @@ GameObject:
   - component: {fileID: 410229896371330907}
   - component: {fileID: 1761660392839379332}
   - component: {fileID: 2612121945502909253}
-  - component: {fileID: 5921662369525462932}
+  - component: {fileID: 1158024427645903744}
   m_Layer: 0
   m_Name: Castle_Blue
   m_TagString: BlueUnit
@@ -5257,7 +5257,7 @@ MonoBehaviour:
   CritChance: 0
   CurrentHealth: 1000
   DamageFont: {fileID: 4864382537853699190, guid: 4b1f95cc5bc94bd459b055d4a0149980, type: 3}
---- !u!114 &5921662369525462932
+--- !u!114 &1158024427645903744
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5266,20 +5266,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 6823779826426592839}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 66c8918a12e30f34fadaa72b7151f883, type: 3}
+  m_Script: {fileID: 11500000, guid: 25a1f48affa9344458119d9b36e57d94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Actions:
-  - {fileID: 11400000, guid: b8171cb2713f4f040b6630694f54215d, type: 2}
-  - {fileID: 11400000, guid: 3eb31becba1448748aee4dd15dd7365c, type: 2}
-  - {fileID: 11400000, guid: 5368f6de11ce8c14dbcdc48850836948, type: 2}
-  CheckFrequency: 0.5
+  Actions: []
+  CheckFrequency: 0
   IsDead: 0
   HealthBar: {fileID: 4790088781626419611}
   BuildingEffect: {fileID: 0}
   TowerUnit: {fileID: 0}
   DeathEffect: {fileID: 5292374428468047040}
-  DeathIcon: {fileID: 21300000, guid: 083f7d49d1c6d4541ad645be79668db2, type: 3}
+  DeathIcon: {fileID: 0}
 --- !u!1 &6996593221645402614
 GameObject:
   m_ObjectHideFlags: 0

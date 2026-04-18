@@ -193,8 +193,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.008664608, y: 0}
-  m_Size: {x: 0.7252693, y: 1}
+  m_Offset: {x: -0.03573227, y: -0.06089875}
+  m_Size: {x: 0.53580856, y: 0.9864666}
   m_Direction: 0
 --- !u!114 &4591647302514780370
 MonoBehaviour:
@@ -311,12 +311,12 @@ SpriteRenderer:
   m_SortingLayerID: 1526793929
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 866174124, guid: aeacc87768cec2646916701e50d85f13, type: 3}
+  m_Sprite: {fileID: -1445552728, guid: c2bf8975e80ba424a97db920db89c38a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 3, y: 3}
+  m_Size: {x: 1.3333334, y: 1.3333334}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -390,8 +390,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 160, y: 20}
+  m_AnchoredPosition: {x: -41.4, y: 0}
+  m_SizeDelta: {x: 77.1, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &922724834965963949
 MonoBehaviour:
@@ -556,7 +556,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0.68}
+  m_AnchoredPosition: {x: 0, y: 0.58}
   m_SizeDelta: {x: 905, y: 506.6667}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &4990336430479212644

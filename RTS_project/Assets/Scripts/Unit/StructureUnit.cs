@@ -40,6 +40,24 @@ public class StructureUnit : Unit
         }
     }
 
+    //protected override void UpdateBehaviour()
+    //{
+    //    if (Time.time - CheckTimer > CheckFrequency)
+    //    {
+    //        CheckTimer = Time.time;
+
+    //        if (IsUnderConstruction)  // 只要处于建造中，无论有无工人，都增加进度
+    //        {
+    //            ProcessValue += 0.05f;  // 根据实际时间增量调整
+
+    //            if (ProcessValue >= 1f)
+    //            {
+    //                CompleteConstruction();
+    //            }
+    //        }
+    //    }
+    //}
+
     public void AssignBuildingProcess(BuildingProcess _buildingProcess)
     {
         m_BuildingProcess = _buildingProcess;

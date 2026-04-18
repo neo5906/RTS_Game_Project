@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8ee94325f9940d4a9c30fb21ee1488a, type: 3}
+  m_Name: SGS
+  m_EditorClassIdentifier: 
+  Icon: {fileID: -1714018416, guid: b6e032bd25e7ebc4e9581c2caa1da533, type: 3}
+  ID: f8891dc4-0e72-4323-8e57-08ccb12e64fe
+  m_UnitPrefab: {fileID: 3162098276872080903, guid: a0155500d6cfd7a489338cfa819c33c6, type: 3}
+  m_TrainingCost: 250
+  m_TrainingTime: 30
+  m_UnitType: 10

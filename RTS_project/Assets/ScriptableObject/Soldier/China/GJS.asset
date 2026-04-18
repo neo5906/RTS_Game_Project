@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8ee94325f9940d4a9c30fb21ee1488a, type: 3}
+  m_Name: GJS
+  m_EditorClassIdentifier: 
+  Icon: {fileID: -1741847911, guid: 0abdc29381aa4d9488c09d3a41d9ede2, type: 3}
+  ID: 80deff8a-0942-4c27-9d67-074a2b833026
+  m_UnitPrefab: {fileID: 8653960584902242482, guid: 156124d032b21bb40b9aad8ec43e652d, type: 3}
+  m_TrainingCost: 50
+  m_TrainingTime: 10
+  m_UnitType: 6

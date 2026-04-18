@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8ee94325f9940d4a9c30fb21ee1488a, type: 3}
+  m_Name: YSZS
+  m_EditorClassIdentifier: 
+  Icon: {fileID: 141784350, guid: 98c0444382a4c1a448c257dd33430a2e, type: 3}
+  ID: e4569899-ad9a-46ad-a419-45d905114df1
+  m_UnitPrefab: {fileID: 8028759869359824069, guid: 21f383cae5a9ba341a1891e12591302f, type: 3}
+  m_TrainingCost: 20
+  m_TrainingTime: 10
+  m_UnitType: 3

@@ -18,3 +18,6 @@ MonoBehaviour:
   CultureCost: 10
   PositionInTree: {x: 60, y: -50}
   Prerequisites: []
+  unlockedBuildings:
+  - {fileID: 11400000, guid: a03efe843e42eba4292ab3bbde0a4ab2, type: 2}
+  isVictoryNode: 0

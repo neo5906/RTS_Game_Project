@@ -18,9 +18,9 @@ public class WarriorUnit : HumanoidUnit
                     if (Time.time - AttackTimer >= AttackFrequency)
                     {
                         AttackTimer = Time.time;
-                        ComboCounter %= 2;
-                        anim.SetBool("Attack_Horizontal", true);
-                        anim.SetInteger("ComboCounter", ComboCounter);
+                        //ComboCounter %= 2;
+                        anim.SetBool("Attack", true);
+                        //anim.SetInteger("ComboCounter", ComboCounter);
                     }
                 }
                 else

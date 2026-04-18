@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb607867f5b3ada459524ec5a0b6bf19, type: 3}
+  m_Name: WuBao
+  m_EditorClassIdentifier: 
+  Icon: {fileID: -969661978, guid: e1d81da80527f7e47b315daa49ccea9c, type: 3}
+  ID: 777859da-dfcf-4e39-828a-d79c2ca1f768
+  m_FoundationSprite: {fileID: 1715559396, guid: 38592d703ef2f9d4ca2a2f8e9639d85c, type: 3}
+  m_CompletionSprite: {fileID: -969661978, guid: e1d81da80527f7e47b315daa49ccea9c, type: 3}
+  m_StructurePrefab: {fileID: 498379507585205714, guid: bdc3e7daa9f8d52459df3f76882d4412, type: 3}
+  m_GoldCost: 0
+  m_WoodCost: 0
+  m_RockCost: 400
+  m_BuildingSize: {x: 4, y: 4, z: 0}
+  m_BuildingOffset: {x: -2, y: -2, z: 0}

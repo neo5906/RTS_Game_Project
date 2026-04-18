@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb607867f5b3ada459524ec5a0b6bf19, type: 3}
+  m_Name: HuangHeLou
+  m_EditorClassIdentifier: 
+  Icon: {fileID: -2074826580, guid: cd9b254741bfd0445acb949be4e7e9d7, type: 3}
+  ID: 6c5a95c5-49c2-4a9a-9013-ffd4a85aa3f7
+  m_FoundationSprite: {fileID: 1715559396, guid: 38592d703ef2f9d4ca2a2f8e9639d85c, type: 3}
+  m_CompletionSprite: {fileID: -2074826580, guid: cd9b254741bfd0445acb949be4e7e9d7, type: 3}
+  m_StructurePrefab: {fileID: 5614269040923433834, guid: 8ac9362db500ff74f9b5582bb13dc1af, type: 3}
+  m_GoldCost: 100
+  m_WoodCost: 250
+  m_RockCost: 50
+  m_BuildingSize: {x: 4, y: 6, z: 0}
+  m_BuildingOffset: {x: -2, y: -3, z: 0}

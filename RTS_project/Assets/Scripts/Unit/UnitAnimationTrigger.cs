@@ -9,7 +9,7 @@ public class UnitAnimationTrigger : MonoBehaviour
 
     private void AnimationFinishTrigger() => unit.AnimationFinishTrigger();
 
-    private void AnimationFinishTrigger_2() => unit.AnimationFinishTrigger_2();
+    //private void AnimationFinishTrigger_2() => unit.AnimationFinishTrigger_2();
 
     private void AttackTrigger()
     {

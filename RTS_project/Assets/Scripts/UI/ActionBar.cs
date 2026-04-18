@@ -7,38 +7,48 @@ using UnityEngine.UI;
 public class ActionBar : MonoBehaviour
 {
     private Image image => GetComponent<Image>();
-    [SerializeField] private GameObject ActionButtonPrefab;
 
-    private List<ActionButton> ActionButtons = new List<ActionButton>();
+    [Header("UI References")]
+    [SerializeField] private GameObject actionButtonPrefab;
+    [SerializeField] private ScrollRect scrollRect;
+    [SerializeField] private RectTransform content;
+
+    private List<ActionButton> actionButtons = new List<ActionButton>();
 
     private void Start()
     {
         HideActionBar();
     }
 
-    public void RegisterActionButton(Sprite _icon, UnityAction _action)
+    public void RegisterActionButton(Sprite icon, UnityAction action)
     {
-        GameObject newButton = Instantiate(ActionButtonPrefab, transform);
-        newButton.GetComponent<ActionButton>().InitializeButton(_icon, _action);
-        ActionButtons.Add(newButton.GetComponent<ActionButton>());
+        if (content == null)
+        {
+            Debug.LogError("ActionBar: Content RectTransform 未赋值！");
+            return;
+        }
+
+        GameObject newButton = Instantiate(actionButtonPrefab, content);
+        ActionButton actionBtn = newButton.GetComponent<ActionButton>();
+        actionBtn.InitializeButton(icon, action);
+        actionButtons.Add(actionBtn);
     }
-    
 
     public void ClearAllActionButtons()
     {
-        if (ActionButtons.Count > 0)
+        foreach (var btn in actionButtons)
         {
-            for (int i = ActionButtons.Count - 1; i >= 0; i--)
-            {
-                Destroy(ActionButtons[i].gameObject);
-                ActionButtons.RemoveAt(i);
-            }
+            if (btn != null)
+                Destroy(btn.gameObject);
         }
+        actionButtons.Clear();
     }
 
     public void ShowActionBar()
     {
         image.color = Color.white;
+        if (scrollRect != null)
+            scrollRect.horizontalNormalizedPosition = 0f; // 重置滚动位置到最左
     }
 
     public void HideActionBar()

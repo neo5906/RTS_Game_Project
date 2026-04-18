@@ -24,7 +24,7 @@ public class ResourcesUI : MonoBehaviour
 
     private void ResourcesChange()
     {
-        DOTween.To(() => int.Parse(WoodAmount.text.Replace(",","")), x => { CultureAmount.text = x.ToString("N0"); },
+        DOTween.To(() => int.Parse(CultureAmount.text.Replace(",","")), x => { CultureAmount.text = x.ToString("N0"); },
                                 m_GameManager.CultureAmount, .5f).SetEase(Ease.InQuad);
 
         DOTween.To(() => int.Parse(GoldAmount.text.Replace(",","")), x => { GoldAmount.text = x.ToString("N0"); },
@@ -33,7 +33,7 @@ public class ResourcesUI : MonoBehaviour
         DOTween.To(() => int.Parse(WoodAmount.text.Replace(",", "")), x => { WoodAmount.text = x.ToString("N0"); },
                                 m_GameManager.WoodAmount, .5f).SetEase(Ease.InQuad);
 
-        DOTween.To(() => int.Parse(GoldAmount.text.Replace(",", "")), x => { RockAmount.text = x.ToString("N0"); },
+        DOTween.To(() => int.Parse(RockAmount.text.Replace(",", "")), x => { RockAmount.text = x.ToString("N0"); },
                                     m_GameManager.RockAmount, .5f).SetEase(Ease.InQuad);
     }
 
