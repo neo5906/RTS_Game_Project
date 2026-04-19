@@ -10098,7 +10098,7 @@ MonoBehaviour:
   productionImage: {fileID: 0}
   productionInterval: 1
   productionImageDuration: 1
-  culturePerProduction: 5
+  culturePerProduction: 10
   goldPerProduction: 0
   woodPerProduction: 0
   rockPerProduction: 0

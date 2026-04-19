@@ -12,9 +12,9 @@ PlayerSettings:
   targetDevice: 2
   useOnDemandResources: 0
   accelerometerFrequency: 60
-  companyName: DefaultCompany
-  productName: RTS_project
-  defaultCursor: {fileID: 0}
+  companyName: "\u8BA1\u7B97\u673A\u8BBE\u8BA1\u5927\u8D5B\u4F5C\u54C1"
+  productName: "\u5343\u5E74\u53E4\u9547"
+  defaultCursor: {fileID: 2800000, guid: 8a828e98338796f41bf4cbde15073968, type: 3}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
   m_ShowUnitySplashScreen: 1
@@ -104,7 +104,7 @@ PlayerSettings:
   xboxEnableFitness: 0
   visibleInBackground: 1
   allowFullscreenSwitch: 1
-  fullscreenMode: 1
+  fullscreenMode: 3
   xboxSpeechDB: 0
   xboxEnableHeadOrientation: 0
   xboxEnableGuest: 0

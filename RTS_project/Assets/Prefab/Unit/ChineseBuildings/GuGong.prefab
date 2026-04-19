@@ -61,10 +61,10 @@ MonoBehaviour:
   productionImage: {fileID: 0}
   productionInterval: 1
   productionImageDuration: 1
-  culturePerProduction: 50
+  culturePerProduction: 0
   goldPerProduction: 0
-  woodPerProduction: 0
-  rockPerProduction: 0
+  woodPerProduction: 50
+  rockPerProduction: 50
 --- !u!114 &8404019829397344376
 MonoBehaviour:
   m_ObjectHideFlags: 0

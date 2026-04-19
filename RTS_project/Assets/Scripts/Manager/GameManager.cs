@@ -49,11 +49,15 @@ public class GameManager : SingletonManager<GameManager>
 
     private CameraController m_CameraController;
 
+    //public PathFinding PathFinding { get; private set; }
+
 
     private void Start()
     {
         m_TilemapManager = TilemapManager.Get();
         m_CameraController = new(PanSpeed, CameraBounds);
+
+        //PathFinding = new PathFinding(m_TilemapManager);
 
         if (techTree != null)
         {
@@ -96,6 +100,27 @@ public class GameManager : SingletonManager<GameManager>
         if (Input.GetKeyDown(KeyCode.H))
         {
             ToggleHealthBars();
+        }
+
+        //作弊
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            CultureAmount += 1000;
+        }
+
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            GoldAmount += 1000;
+        }
+
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            WoodAmount += 1000;
+        }
+
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            RockAmount += 1000;
         }
 
     }
@@ -298,14 +323,13 @@ public class GameManager : SingletonManager<GameManager>
 
         if (IsGameOver) return;
 
-        bool hasActiveBlueBuilding = RegisteredUnits.Any(
-            u => u != null && !u.IsDead && u is StructureUnit && u.CompareTag("BlueUnit")
-        );
-        bool hasActiveRedBuilding = RegisteredUnits.Any(
-            u => u != null && !u.IsDead && u is StructureUnit && u.CompareTag("RedUnit")
+        // 检查市中心是否还存在
+        bool hasActiveBlueMain = RegisteredUnits.Any(
+            u => u != null && !u.IsDead && u is MainUnit && u.CompareTag("BlueUnit")
         );
 
-        if (!hasActiveBlueBuilding)
+        // 如果市中心被摧毁，触发失败
+        if (!hasActiveBlueMain)
         {
             StartCoroutine(FailureSequence());
         }
@@ -411,7 +435,7 @@ public class GameManager : SingletonManager<GameManager>
             }
         }
 
-        // 更新UI（可以发送事件通知科技树UI刷新）
+        //更新UI
         currentTechTreeUI?.RefreshAllNodes();
         return true;
     }
@@ -420,11 +444,10 @@ public class GameManager : SingletonManager<GameManager>
     {
         if (techDetailPanelPrefab == null)
         {
-            Debug.LogError("未指定 techDetailPanelPrefab，无法打开详情界面。");
             return;
         }
 
-        // 实例化详情面板
+        //实例化
         GameObject detailObj = Instantiate(techDetailPanelPrefab, mainCanvas.transform);
         TechDetailUI detailUI = detailObj.GetComponent<TechDetailUI>();
         if (detailUI != null)
@@ -433,7 +456,7 @@ public class GameManager : SingletonManager<GameManager>
         }
         else
         {
-            Debug.LogError("TechDetailPanel 预制体缺少 TechDetailUI 组件！");
+            Debug.LogError("预制体缺少TechDetailUI");
         }
     }
 

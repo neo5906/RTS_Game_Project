@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class AI : MonoBehaviour
 {
-    [SerializeField] private float moveSpeed = 3;
+    [SerializeField] private float moveSpeed = 2;
     private Vector3 m_TargetPosition;
     private HumanoidUnit unit => GetComponent<HumanoidUnit>();
 

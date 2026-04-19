@@ -48,7 +48,7 @@ public class StructureUnit : Unit
 
     //        if (IsUnderConstruction)  // 只要处于建造中，无论有无工人，都增加进度
     //        {
-    //            ProcessValue += 0.05f;  // 根据实际时间增量调整
+    //            ProcessValue += 0.05f;
 
     //            if (ProcessValue >= 1f)
     //            {

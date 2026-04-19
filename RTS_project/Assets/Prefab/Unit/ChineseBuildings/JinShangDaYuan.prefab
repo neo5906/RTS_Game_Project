@@ -57,7 +57,7 @@ MonoBehaviour:
   BuildingEffect: {fileID: 4866884746876766523}
   TowerUnit: {fileID: 0}
   DeathEffect: {fileID: 763885852432490575}
-  DeathIcon: {fileID: 1715559396, guid: 38592d703ef2f9d4ca2a2f8e9639d85c, type: 3}
+  DeathIcon: {fileID: 0}
   productionImage: {fileID: 0}
   productionInterval: 1
   productionImageDuration: 1

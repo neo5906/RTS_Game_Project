@@ -5018,7 +5018,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b063d810bc0bd3f43842c2b8b7d53294, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Actions: []
+  Actions:
+  - {fileID: 11400000, guid: 99eb81b003e585f4ab94e043b054d8cc, type: 2}
+  - {fileID: 11400000, guid: 5a9f1960805de654aafba26b2e73a0dd, type: 2}
+  - {fileID: 11400000, guid: 5bcffcfdbe463d64e8fdad0930ddbdfc, type: 2}
+  - {fileID: 11400000, guid: 36bb1acf4ba82bc47a4775f0e65ba7ac, type: 2}
+  - {fileID: 11400000, guid: 3ff69945f7449ae42933ed2c78f2d9c0, type: 2}
+  - {fileID: 11400000, guid: 0ec6510bfc8183d4f90331612ce639c6, type: 2}
+  - {fileID: 11400000, guid: 04e055875107ea842a3fcee4fa094d80, type: 2}
+  - {fileID: 11400000, guid: 701cb523ffbcf9c4d935d68c8a2d0b66, type: 2}
   CheckFrequency: 0.5
   IsDead: 0
   HealthBar: {fileID: 8464636156144904701}

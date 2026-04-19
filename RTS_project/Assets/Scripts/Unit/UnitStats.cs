@@ -35,7 +35,7 @@ public class UnitStats : MonoBehaviour
             damage *= 2;
         }
         damage = damage*(100 - armor)/100;
-        if(damage < 0) { damage = 0; }
+        if(damage <= 0) { damage = 1; }
 
         GameObject newFont = Instantiate(DamageFont, _stats.transform.position + Vector3.up, Quaternion.identity);
         newFont.GetComponent<DamageFontUI>().SetDamageValue(damage);

@@ -16,7 +16,7 @@ MonoBehaviour:
   ID: ac0b5a42-3620-49df-898e-3ad834ff2b18
   m_FoundationSprite: {fileID: 1715559396, guid: 38592d703ef2f9d4ca2a2f8e9639d85c, type: 3}
   m_CompletionSprite: {fileID: 1739657004, guid: c3b6d65410b02a84b97d21fc81d9fdd6, type: 3}
-  m_StructurePrefab: {fileID: 4864382537853699190, guid: 4b1f95cc5bc94bd459b055d4a0149980, type: 3}
+  m_StructurePrefab: {fileID: 986872889195561020, guid: 0179808ccec60b14b8b77de8b9b062f8, type: 3}
   m_GoldCost: 250
   m_WoodCost: 250
   m_RockCost: 750

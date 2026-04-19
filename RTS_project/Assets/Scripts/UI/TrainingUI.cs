@@ -5,7 +5,7 @@ using UnityEngine;
 
 public enum TrainingUnitType
 {
-    Warrior,Archer,Worker,
+    Warrior, Archer, Worker,
     YSZS,
     GR,
     ZZSB,
@@ -41,7 +41,7 @@ public class TrainingUI : MonoBehaviour
     private float TrainingTimer;
     private bool IsTraining = false;
 
-    private Vector3[] Destination = new Vector3[] { Vector3.up,Vector3.left,Vector3.right,Vector3.down};
+    private Vector3[] Destination = new Vector3[] { Vector3.down };
 
     private void Start()
     {
@@ -53,7 +53,7 @@ public class TrainingUI : MonoBehaviour
 
     private void Update()
     {
-        if(!IsQueueVaild() || IsTraining)
+        if (!IsQueueVaild() || IsTraining)
         {
             return;
         }
@@ -70,29 +70,56 @@ public class TrainingUI : MonoBehaviour
 
         var slot = TrainingSlots.Dequeue();
         Destroy(slot);
+
         var barrack = TrainingBarracks.Dequeue();
-        if(barrack == null || barrack.IsDead)
+        if (barrack == null || barrack.IsDead)
         {
+            IsTraining = false;
             yield break;
         }
 
-        var unit = TrainingUnits.Dequeue();
-        GameObject newUnit = Instantiate(unit,barrack.transform.position,Quaternion.identity);
-        var destination = Destination[Random.Range(0,Destination.Length-1)];
-        //Debug.Log($"{barrack.transform.position + destination * 1.5f}");
-        newUnit.GetComponent<HumanoidUnit>().MoveToDestination(barrack.transform.position + destination * 1.5f);
+        var unitPrefab = TrainingUnits.Dequeue();
+
+        Vector3 spawnPosition = FindSpawnPositionAroundBuilding(barrack.transform.position, barrack.GetComponent<Collider2D>());
+
+        GameObject newUnit = Instantiate(unitPrefab, spawnPosition, Quaternion.identity);
 
         IsTraining = false;
     }
 
+    // 辅助方法：在建筑周围寻找无碰撞体的位置
+    private Vector3 FindSpawnPositionAroundBuilding(Vector3 center, Collider2D buildingCollider)
+    {
+        // 优先尝试四个主方向
+        Vector3[] directions = { Vector3.down, Vector3.up, Vector3.left, Vector3.right };
+        //float checkRadius = 2.5f;
+        float spacing = 1.5f;
+
+        foreach (var dir in directions)
+        {
+            for (float dist = spacing; dist <= 5f; dist += spacing)
+            {
+                Vector3 testPos = center + dir * dist;
+                Collider2D hit = Physics2D.OverlapCircle(testPos, 0.3f);
+                if (hit == null || hit == buildingCollider)
+                {
+                    return testPos;
+                }
+            }
+        }
+
+        // 降级：返回建筑下方 3 单位处
+        return center + Vector3.down * 3f;
+    }
+
     private bool IsQueueVaild() => TrainingSlots.Count > 0 && TrainingTime.Count > 0 && TrainingBarracks.Count > 0 && TrainingUnits.Count > 0;
 
-    public void RegisterTrainingUnit(TrainingUnitType _unitType,float _trainingTime,StructureUnit _barrack,GameObject _unit)
+    public void RegisterTrainingUnit(TrainingUnitType _unitType, float _trainingTime, StructureUnit _barrack, GameObject _unit)
     {
-        switch(_unitType)
+        switch (_unitType)
         {
             case TrainingUnitType.Warrior:
-                newSlot = Instantiate(WarriorSlot,PartForm);
+                newSlot = Instantiate(WarriorSlot, PartForm);
                 break;
             case TrainingUnitType.Archer:
                 newSlot = Instantiate(ArcherSlot, PartForm);

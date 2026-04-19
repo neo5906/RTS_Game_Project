@@ -17,9 +17,12 @@ public class PathFinding
     private List<Node> OpenList = new List<Node>();
     private HashSet<Node> CloseList = new HashSet<Node>();
 
+    private GameManager m_GameManager;
+
     public PathFinding(TilemapManager _tilemapManager)
     {
         m_TilemapManager = _tilemapManager;
+        m_GameManager = GameManager.Get();
 
         var bounds = m_TilemapManager.WalkableTilemap.cellBounds;
 
@@ -176,26 +179,39 @@ public class PathFinding
         return path;
     }
 
+    private bool IsNodeWalkable(Node node)
+    {
+        if (!node.IsWalkable)
+            return false;
+
+        Vector2 nodeCenter = new Vector2(node.CenterX, node.CenterY);
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(nodeCenter, 0.5f);
+        foreach (var col in colliders)
+        {
+            if (col.TryGetComponent<StructureUnit>(out _))
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
     private List<Node> FindNodeNeighbors(Node _node)
     {
         List<Node> neighbors = new List<Node>();
-
-        for(int i=-1;i<=1;i++)
+        for (int i = -1; i <= 1; i++)
         {
-            for(int j=-1;j<=1;j++)
+            for (int j = -1; j <= 1; j++)
             {
-                if (i == 0 && j == 0)
-                    continue;
-
+                if (i == 0 && j == 0) continue;
                 int gridX = _node.ButtomX + i - m_GridOffset.x;
                 int gridY = _node.ButtomY + j - m_GridOffset.y;
                 if (gridX >= 0 && gridY >= 0 && gridX < m_Width && gridY < m_Height)
                 {
-                    var node = Grid[gridX,gridY];
-                    if(node.IsWalkable)
+                    var node = Grid[gridX, gridY];
+                    if (IsNodeWalkable(node))  // 改为动态检查
                         neighbors.Add(node);
                 }
-
             }
         }
         return neighbors;

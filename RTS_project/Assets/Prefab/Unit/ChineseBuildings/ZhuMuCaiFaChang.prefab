@@ -5269,7 +5269,7 @@ MonoBehaviour:
   productionImageDuration: 1
   culturePerProduction: 0
   goldPerProduction: 0
-  woodPerProduction: 1
+  woodPerProduction: 5
   rockPerProduction: 0
 --- !u!114 &3906591735326324942
 MonoBehaviour:

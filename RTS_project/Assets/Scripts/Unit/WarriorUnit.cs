@@ -12,7 +12,7 @@ public class WarriorUnit : HumanoidUnit
             CheckTimer = Time.time;
             if (Target != null && !Target.IsDead)
             {
-                if (CanAttackTarget())
+                if (IsWithinAttackRangeOfTarget())
                 {
                     ai.ClearPath();
                     if (Time.time - AttackTimer >= AttackFrequency)

@@ -64,7 +64,7 @@ MonoBehaviour:
   culturePerProduction: 5
   goldPerProduction: 0
   woodPerProduction: 0
-  rockPerProduction: 5
+  rockPerProduction: 10
 --- !u!114 &8122838603577469546
 MonoBehaviour:
   m_ObjectHideFlags: 0

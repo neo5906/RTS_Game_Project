@@ -179,8 +179,8 @@ MonoBehaviour:
   productionImageDuration: 1
   culturePerProduction: 0
   goldPerProduction: 0
-  woodPerProduction: 10
-  rockPerProduction: 10
+  woodPerProduction: 20
+  rockPerProduction: 20
 --- !u!114 &8585357081248812666
 MonoBehaviour:
   m_ObjectHideFlags: 0

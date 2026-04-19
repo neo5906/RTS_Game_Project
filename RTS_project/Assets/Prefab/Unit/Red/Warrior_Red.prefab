@@ -282,10 +282,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0dde2c0a3966a74fae6e6202fe8710f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Damage: 25
+  Damage: 20
   Armor: 15
   MaxHealth: 200
-  CritChance: 10
+  CritChance: 5
   CurrentHealth: 200
   DamageFont: {fileID: 4864382537853699190, guid: 4b1f95cc5bc94bd459b055d4a0149980, type: 3}
 --- !u!1 &3077345250370361985

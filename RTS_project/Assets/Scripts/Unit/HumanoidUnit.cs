@@ -126,6 +126,37 @@ public class HumanoidUnit : Unit
         return distance < AttackCheckRadius;
     }
 
+    protected bool IsWithinAttackRangeOfTarget()
+    {
+        if (Target == null || Target.IsDead) return false;
+
+        // 如果目标是建筑，使用碰撞检测
+        if (Target is StructureUnit)
+        {
+            Collider2D targetCollider = Target.GetComponentInChildren<Collider2D>();
+            if (targetCollider != null)
+            {
+                Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, AttackCheckRadius);
+                foreach (var hit in hits)
+                {
+                    if (hit.gameObject == targetCollider.gameObject || hit.transform.IsChildOf(Target.transform))
+                        return true;
+                }
+                return false;
+            }
+            else
+            {
+                // 如果没有碰撞体，回退到距离检测
+                return Vector2.Distance(transform.position, Target.transform.position) <= AttackCheckRadius;
+            }
+        }
+        else
+        {
+            // 普通单位：距离检测
+            return Vector2.Distance(transform.position, Target.transform.position) <= AttackCheckRadius;
+        }
+    }
+
     public void AnimationFinishTrigger()
     {
         anim.SetBool("Attack", false);
