@@ -18,6 +18,15 @@ public class TechnologyNodeSO : ScriptableObject
 
     [Header("Victory Condition")]
     [SerializeField] private bool isVictoryNode = false;
+
+    [Header("Worker Upgrade Unlocks")]
+    [SerializeField] private int unlockFortifyLevel = 0;   // 0 表示不升级
+    [SerializeField] private int unlockDecorateLevel = 0;
+    [SerializeField] private bool unlockRepair = false;
+
+    public int UnlockFortifyLevel => unlockFortifyLevel;
+    public int UnlockDecorateLevel => unlockDecorateLevel;
+    public bool UnlockRepair => unlockRepair;
     public bool IsVictoryNode => isVictoryNode;
 
     public List<BuildingActionSO> UnlockedBuildings => unlockedBuildings;

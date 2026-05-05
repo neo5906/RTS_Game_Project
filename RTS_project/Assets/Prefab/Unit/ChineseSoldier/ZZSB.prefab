@@ -101,6 +101,7 @@ MonoBehaviour:
   CheckFrequency: 0.5
   IsDead: 0
   HealthBar: {fileID: 1715402126361816366}
+  unitName: "\u58EE\u65CF\u58EB\u5175"
   ObjectCheckRadius: 5
   AttackCheckRadius: 1.5
   AttackFrequency: 1

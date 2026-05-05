@@ -170,10 +170,13 @@ MonoBehaviour:
   CheckFrequency: 0.5
   IsDead: 0
   HealthBar: {fileID: 597823922356662791}
+  unitName: "\u6807\u51C6\u6784\u4EF6\u5382"
   BuildingEffect: {fileID: 1382289298471506757}
   TowerUnit: {fileID: 0}
   DeathEffect: {fileID: 2270269239329102950}
   DeathIcon: {fileID: 1715559396, guid: 38592d703ef2f9d4ca2a2f8e9639d85c, type: 3}
+  isFortified: 0
+  fortifyArmorBonus: 5
   productionImage: {fileID: 0}
   productionInterval: 1
   productionImageDuration: 1

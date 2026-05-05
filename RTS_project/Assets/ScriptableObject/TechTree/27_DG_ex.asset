@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4f413b530f591f439bbefcbf34e482b, type: 3}
+  m_Name: 27_DG_ex
+  m_EditorClassIdentifier: 
+  NodeID: 27
+  NodeName: "\u6597\u62F1\u6210\u719F"
+  Description: "\u5510\u5B8B\u65F6\u671F\u6597\u62F1\u5F0F\u6837\u6E10\u8D8B\u7EDF\u4E00\uFF0C\u5F62\u6210\u5077\u5FC3\u9020\uFF08\u8DF3\u5934\u4E0A\u4E0D\u6A2A\u65BD\u6A2A\u62F1\uFF09\u548C\u8BA1\u5FC3\u9020\uFF08\u8DF3\u5934\u4E0A\u6A2A\u65BD\u6A2A\u62F1\uFF09\u4E24\u7C7B\u5F62\u5236\u3002\u5077\u5FC3\u9020\u591A\u89C1\u4E8E\u5510\u4EE3\uFF0C\u7ED3\u6784\u7B80\u6D01\uFF1B\u8BA1\u5FC3\u9020\u5728\u5B8B\u4EE3\u6210\u4E3A\u4E3B\u6D41\uFF0C\u627F\u91CD\u66F4\u5747\u5300\n\u89E3\u9501\u5DE5\u4EBA\u516D\u7EA7\u52A0\u56FA\uFF08+1000\u6700\u5927\u751F\u547D\uFF09"
+  CultureCost: 750
+  PositionInTree: {x: 3000, y: -720}
+  Prerequisites:
+  - {fileID: 11400000, guid: 32200c067482f9841a4bbe39810a96b6, type: 2}
+  - {fileID: 11400000, guid: c3c9e96450328cb4e812e426310a4c16, type: 2}
+  unlockedBuildings: []
+  isVictoryNode: 0
+  unlockFortifyLevel: 6
+  unlockDecorateLevel: 0
+  unlockRepair: 0

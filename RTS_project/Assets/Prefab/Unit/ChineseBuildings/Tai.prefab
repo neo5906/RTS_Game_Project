@@ -10106,10 +10106,13 @@ MonoBehaviour:
   CheckFrequency: 0.5
   IsDead: 0
   HealthBar: {fileID: 2238666639478241694}
+  unitName: "\u53F0\u69AD"
   BuildingEffect: {fileID: 3577431364592938491}
   TowerUnit: {fileID: 0}
   DeathEffect: {fileID: 221827303647827681}
   DeathIcon: {fileID: 21300000, guid: 38592d703ef2f9d4ca2a2f8e9639d85c, type: 3}
+  isFortified: 0
+  fortifyArmorBonus: 5
 --- !u!1 &7914466220459766789
 GameObject:
   m_ObjectHideFlags: 0

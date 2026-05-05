@@ -495,6 +495,7 @@ MonoBehaviour:
   CheckFrequency: 0.5
   IsDead: 0
   HealthBar: {fileID: 8867770580413924877}
+  unitName: "\u62AB\u7532\u58EB\u5175"
   ObjectCheckRadius: 5
   AttackCheckRadius: 1.5
   AttackFrequency: 1

@@ -39,6 +39,10 @@ public class GameManager : SingletonManager<GameManager>
     [SerializeField] private float cultureIncreaseInterval = 1f;
     [SerializeField] private int cultureIncreaseAmount = 1;
 
+    [Header("Unit Status Panel")]
+    [SerializeField] private UnitStatusUI unitStatusPanelPrefab;
+    private UnitStatusUI currentStatusPanel;
+
     private float cultureTimer = 0f;
     private bool IsGameOver = false;
 
@@ -143,19 +147,29 @@ public class GameManager : SingletonManager<GameManager>
 
     private void HandleClick(Vector2 _mousePosition)
     {
+        if (HvoUtils.IsPointerOverUIElement()) return;
+
         Collider2D[] colliders = Physics2D.OverlapCircleAll(_mousePosition, detectedRadius);
+        bool clickedOnUnit = false;
 
         foreach (var collider in colliders)
         {
-            if (collider.TryGetComponent(out Unit unit)) 
+            if (collider.TryGetComponent(out Unit unit))
             {
                 SelectNewUnit(unit);
-                return;
-            }     
+                clickedOnUnit = true;
+                break; // 只处理第一个点到的单位（已选择）
+            }
         }
-        if (ActiveUnit != null && ActiveUnit.TryGetComponent(out HumanoidUnit _))
+
+        // 如果没点到任何单位，且当前选中单位是人形单位（包括工人），执行移动
+        if (!clickedOnUnit && ActiveUnit != null && ActiveUnit is HumanoidUnit humanoid)
         {
-            (ActiveUnit as HumanoidUnit).MoveToDestination(_mousePosition);
+            // 如果是工人，先清除任务再移动，防止自动折返
+            if (humanoid is WorkerUnit worker)
+                worker.ClearTask();
+
+            humanoid.MoveToDestination(_mousePosition);
             InitializeRay();
             Instantiate(pointer, _mousePosition, Quaternion.identity);
         }
@@ -180,10 +194,10 @@ public class GameManager : SingletonManager<GameManager>
 
     private void SelectNewUnit(Unit _unit)
     {
-        if (_unit.TryGetComponent(out StructureUnit structure) && structure.IsUnderConstruction && ActiveUnit is WorkerUnit worker)
+        if (ActiveUnit is WorkerUnit worker && _unit is StructureUnit structure && !structure.IsDead && structure.CompareTag("BlueUnit"))
         {
             worker.AssignTarget(structure);
-            worker.currentTask = WorkerTask.Building;
+            // 不改变 worker.currentTask，保持状态栏中选择的任务
             return;
         }
         else if (_unit.TryGetComponent(out TreeUnit tree) && !tree.IsDead && ActiveUnit is WorkerUnit worker_2)
@@ -214,6 +228,22 @@ public class GameManager : SingletonManager<GameManager>
                 ActionBar.RegisterActionButton(action.Icon, () => action.ExecuteAction());
             }
         }
+
+        ActiveUnit = _unit.CompareTag("BlueUnit") ? _unit : null;
+        ActionBar.ClearAllActionButtons();
+        ActionBar.HideActionBar();
+
+        if (ActiveUnit != null && ActiveUnit.Actions.Count > 0)
+        {
+            ActionBar.ShowActionBar();
+            foreach (var action in ActiveUnit.Actions)
+                ActionBar.RegisterActionButton(action.Icon, () => action.ExecuteAction());
+        }
+
+        // === 显示单位状态栏 ===
+        if (currentStatusPanel == null)
+            currentStatusPanel = Instantiate(unitStatusPanelPrefab, mainCanvas.transform);
+        currentStatusPanel.Show(ActiveUnit);
     }
 
     public void StartBuildingProcess(BuildingActionSO _action)
@@ -434,7 +464,10 @@ public class GameManager : SingletonManager<GameManager>
                 }
             }
         }
-
+        if (node.UnlockFortifyLevel > 0)
+            UnlockFortifyLevel(node.UnlockFortifyLevel);
+        if (node.UnlockDecorateLevel > 0)
+            UnlockDecorateLevel(node.UnlockDecorateLevel);
         //更新UI
         currentTechTreeUI?.RefreshAllNodes();
         return true;
@@ -497,4 +530,51 @@ public class GameManager : SingletonManager<GameManager>
             }
         }
     }
+
+    public void RefreshStatusPanel(Unit unit = null)
+    {
+        if (currentStatusPanel == null || !currentStatusPanel.gameObject.activeInHierarchy)
+            return;
+
+        if (unit != null && unit == ActiveUnit)
+        {
+            currentStatusPanel.UpdateHealthDisplay(unit);
+        }
+        else if (unit == null)
+        {
+            if (ActiveUnit != null)
+                currentStatusPanel.UpdateHealthDisplay(ActiveUnit);
+            else
+                currentStatusPanel.UpdateWorkerDisplay();
+        }
+    }
+
+    public void HideStatusPanel()
+    {
+        if (currentStatusPanel != null)
+            currentStatusPanel.Hide();
+    }
+
+    public void DeselectUnit()
+    {
+        ActiveUnit = null;
+        ActionBar.ClearAllActionButtons();
+        ActionBar.HideActionBar();
+        if (currentStatusPanel != null)
+            currentStatusPanel.Hide();
+    }
+
+    private int maxFortifyLevel = 0;
+    private int maxDecorateLevel = 0;
+
+    public void UnlockFortifyLevel(int level)
+    {
+        if (level > maxFortifyLevel) maxFortifyLevel = level;
+    }
+    public void UnlockDecorateLevel(int level)
+    {
+        if (level > maxDecorateLevel) maxDecorateLevel = level;
+    }
+    public int GetMaxUnlockedFortifyLevel() => maxFortifyLevel;
+    public int GetMaxUnlockedDecorateLevel() => maxDecorateLevel;
 }

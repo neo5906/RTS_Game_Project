@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4f413b530f591f439bbefcbf34e482b, type: 3}
+  m_Name: 22_DQ_ex
+  m_EditorClassIdentifier: 
+  NodeID: 22
+  NodeName: "\u4E39\u6F06\u7CBE\u5DE5"
+  Description: "\u79E6\u6C49\u65F6\u671F\u5728\u5BAB\u6BBF\u67F1\u5B50\u4E0A\u6D82\u4E39\u8272\u6210\u4E3A\u5B9A\u5236\u3002\u540C\u65F6\u74E6\u5F53\u827A\u672F\u7CBE\u8FDB\uFF0C\u51FA\u73B0\u4E86\u201C\u79E6\u7816\u6C49\u74E6\u201D\u4E4B\u79F0\n\u89E3\u9501\u5DE5\u4EBA\u4E8C\u7EA7\u88C5\u9970\uFF08\u6587\u5316+2/s\uFF09"
+  CultureCost: 100
+  PositionInTree: {x: 1560, y: -360}
+  Prerequisites:
+  - {fileID: 11400000, guid: 1398a0b8fd7945446a8c5b56fa24e766, type: 2}
+  unlockedBuildings: []
+  isVictoryNode: 0
+  unlockFortifyLevel: 0
+  unlockDecorateLevel: 2
+  unlockRepair: 0

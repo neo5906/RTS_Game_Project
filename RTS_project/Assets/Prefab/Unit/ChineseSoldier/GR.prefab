@@ -598,11 +598,13 @@ MonoBehaviour:
   CheckFrequency: 0.5
   IsDead: 0
   HealthBar: {fileID: 3099813915721777432}
+  unitName: "\u5DE5\u4EBA"
   ObjectCheckRadius: 3
   AttackCheckRadius: 0
   AttackFrequency: 0
   Enemies: []
   Target: {fileID: 0}
+  maxLabor: 3
   currentTask: 0
 --- !u!114 &4462278893632047190
 MonoBehaviour:

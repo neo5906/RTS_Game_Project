@@ -56,6 +56,23 @@ public class UnitStats : MonoBehaviour
             _stats.Death();
         }
         _stats.onHealthChanged?.Invoke();
+
+        GameManager.Get().RefreshStatusPanel(_stats.GetComponent<Unit>());
+    }
+
+    public void HealToFull()
+    {
+        CurrentHealth = MaxHealth;
+        onHealthChanged?.Invoke();
+
+        GameManager.Get().RefreshStatusPanel(GetComponent<Unit>());
+    }
+
+    public void AddMaxHealth(int amount)
+    {
+        MaxHealth += amount;
+        CurrentHealth += amount;    // 保持当前生命值同步增加
+        onHealthChanged?.Invoke();
     }
 
     public void Death()

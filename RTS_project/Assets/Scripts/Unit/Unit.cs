@@ -21,6 +21,10 @@ public class Unit : MonoBehaviour
     [Header("Health Bar")]
     [SerializeField] protected GameObject HealthBar;
 
+    [Header("Display")]
+    [SerializeField] private string unitName;
+    public string UnitName => string.IsNullOrEmpty(unitName) ? gameObject.name : unitName;
+
     public System.Action onFlipped;
 
     protected virtual void Start()
@@ -51,6 +55,11 @@ public class Unit : MonoBehaviour
         m_GameManager.RemoveUnit(this);
         if (HealthBar != null)
             HealthBar.SetActive(false);
+        if (m_GameManager.ActiveUnit == this)
+        {
+            m_GameManager.ActiveUnit = null;
+            m_GameManager.HideStatusPanel(); // 需在 GameManager 中实现
+        }
     }
 
     public void DestroyUnit() => Destroy(gameObject);

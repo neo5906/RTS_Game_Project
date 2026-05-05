@@ -5236,8 +5236,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 3, y: 2}
+  m_Offset: {x: -0.0066177053, y: 0.013236284}
+  m_Size: {x: 2.4705796, y: 2.4705796}
   m_Direction: 0
 --- !u!114 &2612121945502909253
 MonoBehaviour:
@@ -5273,10 +5273,13 @@ MonoBehaviour:
   CheckFrequency: 0
   IsDead: 0
   HealthBar: {fileID: 4790088781626419611}
-  BuildingEffect: {fileID: 0}
+  unitName: "\u5E02\u4E2D\u5FC3"
+  buildingEffect: {fileID: 0}
   TowerUnit: {fileID: 0}
   DeathEffect: {fileID: 5292374428468047040}
   DeathIcon: {fileID: 0}
+  isFortified: 0
+  fortifyArmorBonus: 5
 --- !u!1 &6996593221645402614
 GameObject:
   m_ObjectHideFlags: 0
